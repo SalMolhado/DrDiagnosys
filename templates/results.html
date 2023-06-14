@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<h2>Resultados</h2>
+<ul>
+{% for result in results %}
+    <li>{{ result }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

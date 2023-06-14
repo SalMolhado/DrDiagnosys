@@ -1,0 +1,27 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Sistema de Saúde{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li><a href="/">Dr Diagnosys</a></li>
+                    <li><a href="{{ url_for('consulta', consulta_id=1) }}">Consulta 1</a></li>
+                    <li><a href="{{ url_for('consulta', consulta_id=2) }}">Consulta 2</a></li>
+                    <li><a href="{{ url_for('consulta', consulta_id=3) }}">Consulta 3</a></li>
+                    <li><a href="{{ url_for('consulta', consulta_id=4) }}">Consulta 4</a></li>
+                    <li><a href="{{ url_for('consulta', consulta_id=5) }}">Consulta 5</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            {% block page_content %}
+            {% endblock %}
+        </main>
+    </div>
+</div>
+{% endblock %}

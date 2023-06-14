@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<h2>{{ nome_consulta }}</h2>
+<p>{{ descriptions }}</p>
+
+<form method="POST">
+    {% if input_type == 'single' %}
+    <label for="items">Enter your item:</label>
+    <input name="items" type="text">
+    {% elif input_type == 'multi' %}
+    <label for="items">Select one or more items:</label>
+    <select name="items" multiple>
+        {% for item in items %}
+        <option value="{{ item[0] }}">{{ item[1] }}</option>
+        {% endfor %}
+    </select>
+    {% elif input_type == 'no_input' %}
+    <input type="hidden" name="items">
+    {% endif %}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
+
