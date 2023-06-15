@@ -1,0 +1,70 @@
+[
+  {
+    "Nome": "Quimioterapia",
+    "Descrição": "Tratamento que utiliza medicamentos para destruir células cancerígenas."
+  },
+  {
+    "Nome": "Radioterapia",
+    "Descrição": "Tratamento que utiliza radiação para destruir células cancerígenas."
+  },
+  {
+    "Nome": "Transplante de células-tronco",
+    "Descrição": "Procedimento que substitui células doentes ou danificadas por células saudáveis."
+  },
+  {
+    "Nome": "Cirurgia",
+    "Descrição": "Procedimento médico que envolve a remoção física de doenças ou lesões."
+  },
+  {
+    "Nome": "Imunoterapia",
+    "Descrição": "Tratamento que utiliza o sistema imunológico do corpo para combater doenças, como o câncer."
+  },
+  {
+    "Nome": "Terapia hormonal",
+    "Descrição": "Tratamento que adiciona, bloqueia ou remove hormônios para tratar certas condições médicas."
+  },
+  {
+    "Nome": "Terapia alvo",
+    "Descrição": "Tratamento que visa características específicas das células cancerígenas para combater a doença."
+  },
+  {
+    "Nome": "Exercícios de Kegel",
+    "Descrição": "Exercícios que fortalecem os músculos do assoalho pélvico."
+  },
+  {
+    "Nome": "Treinamento da bexiga",
+    "Descrição": "Técnicas que ajudam a controlar a frequência e o momento da micção."
+  },
+  {
+    "Nome": "Medicamentos",
+    "Descrição": "Substâncias usadas para tratar ou prevenir doenças ou condições médicas."
+  },
+  {
+    "Nome": "Dispositivos médicos",
+    "Descrição": "Produtos usados para diagnosticar, prevenir ou tratar doenças ou condições médicas sem quaisquer efeitos químicos."
+  },
+  {
+    "Nome": "Intervenções cirúrgicas",
+    "Descrição": "Procedimentos médicos que envolvem uma incisão com instrumentos."
+  },
+  {
+    "Nome": "Antibióticos",
+    "Descrição": "Medicamentos usados para prevenir e tratar infecções bacterianas."
+  },
+  {
+    "Nome": "Analgésicos",
+    "Descrição": "Medicamentos usados para aliviar a dor."
+  },
+  {
+    "Nome": "Insulina",
+    "Descrição": "Hormônio que regula os níveis de açúcar no sangue."
+  },
+  {
+    "Nome": "Dieta e exercícios",
+    "Descrição": "Mudanças no estilo de vida que envolvem a alimentação e a atividade física."
+  },
+  {
+    "Nome": "Terapia de reposição hormonal com levotiroxina",
+    "Descrição": "Tratamento para o hipotireoidismo que envolve a reposição do hormônio tireoidiano."
+  }
+]

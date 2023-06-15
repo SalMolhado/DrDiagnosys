@@ -1,5 +1,5 @@
 
-	[
+[
 		{"Nome": "Oncológicas", "Descrição": "Estas são doenças caracterizadas pelo desenvolvimento incontrolado de células, que podem se espalhar para outras partes do corpo."},
   		{"Nome": "Urológicas", "Descrição": "São doenças que afetam o sistema urinário em homens e mulheres, e o sistema reprodutivo masculino."},
   		{"Nome": "Endocrinológicas", "Descrição": "São doenças que ocorrem quando as glândulas endócrinas produzem muito ou pouco de certos hormônios."},
@@ -18,5 +18,5 @@
 		{"Nome": "Respiratórias", "Descrição": "Estas são doenças que afetam os pulmões e as vias respiratórias. Exemplos são a asma, bronquite crônica, enfisema e fibrose cística."},
 		{"Nome": "Renais", "Descrição": "Estas são doenças que afetam os rins. Exemplos incluem doença renal crônica, cistos renais, infecções do trato urinário e cálculos renais."},
 		{"Nome": "Cardiovasculares", "Descrição": "Estas são doenças que afetam o coração e os vasos sanguíneos. Exemplos incluem doença cardíaca coronária, hipertensão, arritmia, insuficiência cardíaca."},
-		{"Nome": "Gastrointestinais", "Descrição": "Estas são doenças que afetam o sistema digestivo. Incluem úlceras, doença celíaca, doença inflamatória intestinal (como a doença de Crohn e a colite ulcerativa), entre outras."},
-	]
+		{"Nome": "Gastrointestinais", "Descrição": "Estas são doenças que afetam o sistema digestivo. Incluem úlceras, doença celíaca, doença inflamatória intestinal (como a doença de Crohn e a colite ulcerativa), entre outras."}
+]

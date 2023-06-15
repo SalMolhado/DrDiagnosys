@@ -1,0 +1,90 @@
+[
+  {
+    "Nome": "Fumar",
+    "Descrição": "O uso de produtos de tabaco, especialmente cigarros, que pode aumentar o risco de várias doenças, incluindo câncer e doenças cardíacas."
+  },
+  {
+    "Nome": "Histórico familiar",
+    "Descrição": "Ter um parente próximo, como um pai ou irmão, com uma doença específica pode aumentar o risco de desenvolver essa doença."
+  },
+  {
+    "Nome": "Radiação ionizante",
+    "Descrição": "Exposição a tipos específicos de radiação, como a radiação de raios-X ou de materiais radioativos, que pode aumentar o risco de certos tipos de câncer."
+  },
+  {
+    "Nome": "Certos produtos químicos",
+    "Descrição": "Exposição a certos produtos químicos, especialmente no local de trabalho, que pode aumentar o risco de várias doenças."
+  },
+  {
+    "Nome": "Quimioterapia prévia",
+    "Descrição": "Ter recebido tratamento com quimioterapia no passado, que pode aumentar o risco de desenvolver certos tipos de câncer."
+  },
+  {
+    "Nome": "Síndrome de Down",
+    "Descrição": "Uma condição genética que pode aumentar o risco de certas doenças, incluindo leucemia."
+  },
+  {
+    "Nome": "Obesidade",
+    "Descrição": "Ter um peso corporal significativamente acima do que é considerado saudável, o que pode aumentar o risco de várias doenças, incluindo diabetes e câncer."
+  },
+  {
+    "Nome": "Dieta não saudável",
+    "Descrição": "Uma dieta rica em gorduras saturadas, açúcares e sal, e pobre em frutas, vegetais e fibras, que pode aumentar o risco de várias doenças."
+  },
+  {
+    "Nome": "Falta de exercício",
+    "Descrição": "Um estilo de vida sedentário, que pode aumentar o risco de várias doenças, incluindo diabetes e doenças cardíacas."
+  },
+  {
+    "Nome": "Uso de álcool",
+    "Descrição": "Consumo excessivo de álcool, que pode aumentar o risco de várias doenças, incluindo doenças do fígado e câncer."
+  },
+  {
+    "Nome": "Certas infecções",
+    "Descrição": "Ter certas infecções, como o vírus do papiloma humano (HPV), pode aumentar o risco de certos tipos de câncer."
+  },
+  {
+    "Nome": "Genética",
+    "Descrição": "Ter certas variantes genéticas ou mutações pode aumentar o risco de várias doenças, incluindo diabetes."
+  },
+  {
+    "Nome": "Deficiência de iodo",
+    "Descrição": "Não obter iodo suficiente na dieta, o que pode aumentar o risco de hipotireoidismo."
+  },
+  {
+    "Nome": "Tireoidite de Hashimoto",
+    "Descrição": "Uma doença autoimune em que o sistema imunológico ataca a glândula tireoide, o que pode aumentar o risco de hipotireoidismo."
+  },
+  {
+    "Nome": "Infecções virais",
+    "Descrição": "Ter certas infecções virais, como hepatite B ou C, pode aumentar o risco de doenças do fígado."
+  },
+  {
+    "Nome": "Alcoolismo",
+    "Descrição": "O uso crônico e excessivo de álcool, que pode danificar o fígado e outros órgãos."
+  },
+  {
+    "Nome": "Toxinas",
+    "Descrição": "Exposição a certas toxinas, como alguns venenos e produtos químicos industriais, que podem danificar o fígado e outros órgãos."
+  },
+  {
+    "Nome": "Autoimunidade",
+    "Descrição": "Condições em que o sistema imunológico ataca erroneamente células e tecidos saudáveis do corpo, o que pode aumentar o risco de várias doenças."
+  },
+  {
+    "Nome": "Dieta rica em açúcar simples",
+    "Descrição": "Uma dieta que inclui uma grande quantidade de açúcares simples, como os encontrados em doces e refrigerantes, que pode aumentar o risco de cáries dentárias."
+  },
+  {
+    "Nome": "Diabetes mellitus",
+    "Descrição": "Uma doença que resulta em altos níveis de açúcar no sangue, o que pode aumentar o risco de várias outras doenças."
+  },
+  {
+    "Nome": "Síndrome de Sjogren",
+    "Descrição": "Uma doença autoimune que ataca as glândulas que produzem lágrimas e saliva, o que pode aumentar o risco de cáries dentárias."
+  },
+  {
+    "Nome": "Medicamentos que diminuem a saliva",
+    "Descrição": "O uso de certos medicamentos que podem reduzir a produção de saliva, o que pode aumentar o risco de cáries dentárias."
+  }
+]

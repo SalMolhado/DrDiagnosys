@@ -21,7 +21,7 @@ CREATE TABLE Causas
 ( 
  id_causa INT AUTO_INCREMENT,  
  nome_causa VARCHAR(50) NOT NULL,  
- descricao_causa INT,    
+ descricao_causa VARCHAR(300) NOT NULL,  
  PRIMARY KEY (id_causa),
  UNIQUE (nome_causa)
 ); 

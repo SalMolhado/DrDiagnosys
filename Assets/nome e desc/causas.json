@@ -1,0 +1,74 @@
+[
+  {
+    "Nome": "Fatores genéticos e ambientais",
+    "Descrição": "Variações genéticas herdadas ou alterações genéticas causadas por fatores ambientais que podem aumentar o risco de certas doenças."
+  },
+  {
+    "Nome": "Infecções virais",
+    "Descrição": "Infecções causadas por vírus que podem levar a várias doenças."
+  },
+  {
+    "Nome": "Uso de álcool",
+    "Descrição": "O consumo de álcool pode levar a várias condições de saúde, incluindo doenças do fígado e certos tipos de câncer."
+  },
+  {
+    "Nome": "Toxinas",
+    "Descrição": "Substâncias tóxicas que podem ser prejudiciais ao corpo e causar várias doenças."
+  },
+  {
+    "Nome": "Autoimunidade",
+    "Descrição": "Condição em que o sistema imunológico do corpo ataca erroneamente as células saudáveis, levando a várias doenças."
+  },
+  {
+    "Nome": "Idade, obesidade, gravidez e parto, cirurgia na próstata ou na pelve, e certas doenças neurológicas",
+    "Descrição": "Vários fatores que podem contribuir para a incontinência urinária."
+  },
+  {
+    "Nome": "Infecção bacteriana na bexiga",
+    "Descrição": "Uma infecção causada por bactérias na bexiga, que pode levar a condições como a cistite."
+  },
+  {
+    "Nome": "Obesidade",
+    "Descrição": "Excesso de peso corporal que pode aumentar o risco de várias doenças, incluindo diabetes."
+  },
+  {
+    "Nome": "Falta de exercício",
+    "Descrição": "Inatividade física que pode aumentar o risco de várias doenças, incluindo diabetes."
+  },
+  {
+    "Nome": "Genética",
+    "Descrição": "Variações genéticas herdadas que podem aumentar o risco de certas doenças."
+  },
+  {
+    "Nome": "Deficiência de iodo",
+    "Descrição": "Falta de iodo na dieta que pode levar a condições como o hipotireoidismo."
+  },
+  {
+    "Nome": "Tireoidite de Hashimoto",
+    "Descrição": "Uma doença autoimune que ataca a glândula tireoide, levando ao hipotireoidismo."
+  },
+  {
+    "Nome": "Infecção bacteriana ou viral",
+    "Descrição": "Infecções causadas por bactérias ou vírus que podem levar a várias doenças, incluindo otite."
+  },
+  {
+    "Nome": "Alcoolismo",
+    "Descrição": "Consumo crônico e excessivo de álcool que pode levar a várias doenças, incluindo hepatite e cirrose."
+  },
+  {
+    "Nome": "Vírus da hepatite B",
+    "Descrição": "Um vírus que causa a hepatite B, que pode levar a doenças do fígado, incluindo cirrose."
+  },
+  {
+   "Nome": "Vírus da hepatite C",
+    "Descrição": "Um vírus que causa a hepatite C, que pode levar a doenças do fígado, incluindo cirrose."
+  },
+  {
+    "Nome": "Doença hepática gordurosa não alcoólica",
+    "Descrição": "Acúmulo de gordura no fígado que não é causado pelo consumo de álcool, que pode levar a condições como cirrose."
+  },
+  {
+    "Nome": "Bactérias que produzem ácido a partir de resíduos alimentares",
+    "Descrição": "Bactérias na boca que produzem ácido a partir de resíduos alimentares, levando à cárie dentária."
+  }
+]

@@ -1,0 +1,210 @@
+[
+  {
+    "Nome": "Fadiga",
+    "Descrição": "Sensação persistente de cansaço, falta de energia ou exaustão."
+  },
+  {
+    "Nome": "Febre ou calafrios",
+    "Descrição": "Aumento temporário da temperatura do corpo, frequentemente devido a uma doença; calafrios podem acompanhar a febre."
+  },
+  {
+    "Nome": "Infecções graves ou frequentes",
+    "Descrição": "Ocorrência de infecções que são frequentes, duram mais tempo ou são mais graves do que o normal."
+  },
+  {
+    "Nome": "Perda de peso sem tentar",
+    "Descrição": "Perda de peso sem fazer dieta ou exercícios."
+  },
+  {
+    "Nome": "Nódulos linfáticos inchados",
+    "Descrição": "Inchaço dos nódulos linfáticos, que são pequenas glândulas que filtram a linfa, o líquido que circula pelo sistema linfático."
+  },
+  {
+    "Nome": "Fígado ou baço aumentado",
+    "Descrição": "Aumento do tamanho do fígado ou do baço, que pode ser detectado por um médico durante um exame físico."
+  },
+  {
+    "Nome": "Sangramento ou hematomas fáceis",
+    "Descrição": "Sangramento que é difícil de parar, ou hematomas que ocorrem facilmente ou sem razão aparente."
+  },
+  {
+    "Nome": "Sangramentos nasais recorrentes",
+    "Descrição": "Sangramento do nariz que ocorre frequentemente."
+  },
+  {
+    "Nome": "Pequenos pontos vermelhos na pele",
+    "Descrição": "Pequenas manchas vermelhas na pele, geralmente causadas por sangramento sob a pele."
+  },
+  {
+    "Nome": "Suor excessivo, especialmente à noite",
+    "Descrição": "Transpiração excessiva, que pode ser mais notável durante a noite."
+  },
+  {
+    "Nome": "Dor ou sensibilidade óssea",
+    "Descrição": "Dor ou desconforto em um ou mais ossos."
+  },
+  {
+    "Nome": "Incapacidade de controlar a micção",
+    "Descrição": "Dificuldade ou incapacidade de controlar a micção."
+  },
+  {
+    "Nome": "Micção dolorosa",
+    "Descrição": "Dor ou desconforto durante a micção."
+  },
+  {
+    "Nome": "Sintomas de infecção do trato urinário",
+    "Descrição": "Sintomas que podem incluir micção dolorosa, urgência em urinar, urina turva ou com odor forte, e dor na parte inferior do abdômen."
+  },
+  {
+    "Nome": "Micção frequente ou urgente",
+    "Descrição": "Necessidade de urinar mais vezes do que o normal, ou uma súbita urgência de urinar."
+  },
+  {
+    "Nome": "Dor pélvica",
+    "Descrição": "Dor na área abaixo do abdômen e entre os ossos do quadril."
+  },
+  {
+    "Nome": "Cor ou odor de urina incomum",
+    "Descrição": "Urina que tem uma cor ou odor diferente do normal."
+  },
+  {
+    "Nome": "Sede excessiva",
+    "Descrição": "Necessidade de beber líquidos mais do que o normal."
+  },
+  {
+    "Nome": "Fome aumentada",
+    "Descrição": "Desejo de comer mais do que o normal."
+  },
+  {
+    "Nome": "Visão diminuída",
+    "Descrição": "Perda parcial ou total da visão."
+  },
+  {
+    "Nome": "Dor abdominal geral, cãibras ou espasmos",
+    "Descrição": "Dor, cãibras ou espasmos na área do abdômen."
+  },
+  {
+    "Nome": "Perda de sensações",
+    "Descrição": "Perda de sensação ou sensibilidade em uma ou mais áreas do corpo."
+  },
+  {
+    "Nome": "Visão embaçada ou nublada",
+    "Descrição": "Visão que é menos clara do que o normal, ou parece nublada."
+  },
+  {
+    "Nome": "Dor nas costas, dores, desconforto",
+    "Descrição": "Dor, desconforto ou sensação de desconforto na área das costas."
+  },
+  {
+    "Nome": "Ganho de peso",
+    "Descrição": "Aumento do peso corporal, geralmente devido ao acúmulo de gordura corporal."
+  },
+  {
+    "Nome": "Constipação",
+    "Descrição": "Dificuldade em ter evacuações regulares ou movimentos intestinais que são menos frequentes do que o normal."
+  },
+  {
+    "Nome": "Pele seca",
+    "Descrição": "Pele que é menos oleosa ou úmida do que o normal."
+  },
+  {
+    "Nome": "Intolerância ao frio",
+    "Descrição": "Sensação de frio mesmo em ambientes quentes ou temperados."
+  },
+  {
+    "Nome": "Problemas de temperamento",
+    "Descrição": "Dificuldade em controlar as emoções ou comportamento."
+  },
+  {
+    "Nome": "Náusea",
+    "Descrição": "Sensação de desconforto ou mal-estar no estômago, com uma vontade de vomitar."
+  },
+  {
+    "Nome": "Movimentos involuntários",
+    "Descrição": "Movimentos que você não controla, como tremores ou espasmos."
+  },
+  {
+    "Nome": "Congestão nasal",
+    "Descrição": "Bloqueio ou obstrução das passagens nasais, geralmente devido ao excesso de muco."
+  },
+  {
+    "Nome": "Sangramento gastrointestinal",
+    "Descrição": "Sangramento do trato gastrointestinal, que inclui o esôfago, estômago, intestino delgado e intestino grosso."
+  },
+  {
+    "Nome": "Sintomas do fígado, vesícula biliar ou trato biliar",
+    "Descrição": "Sintomas que podem incluir dor abdominal, icterícia (pele e olhos amarelados), náuseas, vômitos, e alterações nas fezes ou na urina."
+  },
+  {
+    "Nome": "Inchaço abdominal",
+    "Descrição": "Aumento do volume ou sensação de plenitude na área do abdômen."
+  },
+  {
+    "Nome": "Icterícia",
+    "Descrição": "Amarelamento da pele e dos olhos, geralmente devido a problemas no fígado."
+  },
+  {
+    "Nome": "Dor de dente",
+    "Descrição": "Dor ou desconforto nos dentes ou ao redor deles."
+  },
+  {
+    "Nome": "Sintomas de dentes ou gengivas",
+    "Descrição": "Sintomas que podem incluir dor, sensibilidade, inchaço, sangramento ou alterações na cor das gengivas ou dos dentes."
+  },
+  {
+    "Nome": "Secreção ocular",
+    "Descrição": "Fluido que sai do olho, que pode ser claro, amarelo, verde, ou misturado com sangue."
+  },
+  {
+    "Nome": "Humor deprimido",
+    "Descrição": "Sentimentos de tristeza, vazio ou desesperança que são intensos ou duram muito tempo."
+  },
+  {
+    "Nome": "Ansiedade e nervosismo",
+    "Descrição": "Sentimentos de preocupação, medo ou desconforto."
+  },
+  {
+    "Nome": "Sintomas psicológicos",
+    "Descrição": "Sintomas que afetam o pensamento, o sentimento, o comportamento ou a percepção, como delírios, alucinações, depressão ou ansiedade."
+  },
+  {
+    "Nome": "Perda de peso",
+    "Descrição": "Perda de peso que ocorre sem tentar perder peso."
+  },
+  {
+    "Nome": "Delírios ou alucinações",
+    "Descrição": "Crenças falsas ou percepções de coisas que não estão realmente presentes."
+  },
+  {
+    "Nome": "Perturbações comportamentais",
+    "Descrição": "Comportamentos que são incomuns, perturbadores ou inapropriados."
+  },
+  {
+    "Nome": "Dores de cabeça",
+    "Descrição": "Dor ou desconforto na cabeça."
+  },
+  {
+    "Nome": "Dor no tornozelo",
+    "Descrição": "Dor ou desconforto no tornozelo."
+  },
+  {
+    "Nome": "Febre",
+    "Descrição": "Aumento temporário da temperatura normal do corpo."
+  },
+  {
+    "Nome": "Dor nas mãos e dedos",
+    "Descrição": "Dor ou desconforto nas mãos ou nos dedos."
+  },
+  {
+    "Nome": "Sintomas nas mãos e dedos",
+    "Descrição": "Sintomas que afetam as mãos ou os dedos, como dor, inchaço, formigamento ou fraqueza."
+  },
+  {
+    "Nome": "Dor no pulso",
+    "Descrição": "Dor ou desconforto no pulso."
+  },
+  {
+    "Nome": "Dor no quadril",
+    "Descrição": "Dor ou desconforto na área do quadril."
+  }
+]
