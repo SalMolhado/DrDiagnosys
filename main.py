@@ -159,7 +159,7 @@ def format_sql_from_file(filename, params=None):
                 raw_sql = raw_sql.replace("= %s", "= " + placeholder, 1)
                 final_params.append(param_set[0])
         sql = raw_sql
-        final_params = tuple([item for sublist in params.get('in', []) for item in sublist])
+        # final_params = tuple([item for sublist in params.get('in', []) for item in sublist])
     else:
         sql = raw_sql
         final_params = ()
@@ -315,8 +315,12 @@ def handle_single_input(form):
 
 def handle_list_input(form):
     print('\nhandle_list_input')
-    input_data = form.getlist('items')
-    params = {'in': [(int(item),) for item in input_data]}
+    selection_count = 2
+    params = []
+    for i in range(1, selection_count+1):
+        input_data = form.getlist('selection' + str(i))
+        print(input_data)
+        params.append(input_data)
     return params
 
 
@@ -343,11 +347,11 @@ def get_results_from_db(selected_items, consulta_id):
         )
         headers, results = execute_sql(sql, params, headers=True)
     elif consulta_id == 1:
-        sql, params = format_sql_from_file(
-            path.join(pathfile, 'interseção de doenças associadas a sintomas e fatores de risco.sql'),
-            selected_items
-        )
+        sql_path = path.join(pathfile, 'interseção de doenças associadas a sintomas e fatores de risco.sql')
+        sql, params = format_multi_query(sql_path=sql_path, params=selected_items)
+
         headers, results = execute_sql(sql, params, headers=True)
+
     elif consulta_id == 4:
         sql, params = format_sql_from_file(
             path.join(pathfile, 'causas por doenças.sql'),
@@ -363,6 +367,19 @@ def get_results_from_db(selected_items, consulta_id):
     else:
         raise IndexError('Nenhuma consulta com esse id')
     return results, headers
+
+
+def format_multi_query(sql_path, params):
+    with open(sql_path, 'r', encoding='utf-8') as file:
+        sql = file.read()
+    for pool in params:
+        if len(pool) > 1:
+            sql = sql.replace('IN %s', f"IN ({', '.join(['%s' for _ in pool])})", 1)
+        else:
+            sql = sql.replace('IN %s', 'IN (%s)')
+    final_params = tuple([item for sublist in params for tup in sublist for item in tup])
+    print(f'sql: {sql}\nfinal_params: {final_params}')
+    return sql, final_params
 
 
 def pre_render_template(consulta_id):

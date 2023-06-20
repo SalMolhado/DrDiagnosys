@@ -10,11 +10,11 @@ WHERE D1.id_doenca IN
 (
     SELECT DS.id_doenca 
     FROM DoencaSintoma DS
-    WHERE DS.id_sintoma IN (1, 2, 3)
+    WHERE DS.id_sintoma IN %s
 ) 
 AND D1.id_doenca IN 
 (
     SELECT DFR.id_doenca 
     FROM DoencaFatorDeRisco DFR
-    WHERE DFR.id_fatorderisco IN (4, 5, 6)
+    WHERE DFR.id_fatorderisco IN %s
 );

@@ -8,7 +8,7 @@
     {% if input_type == 'multi' %}
         {% for selection in items %}
             <label for="selection">Selecione um ou mais: </label>
-            <select id="multiSelect{{loop.index}}" name="selection" multiple>
+            <select id="multiSelect{{loop.index}}" name="selection{{loop.index}}" multiple>
             {% for item in selection %}
                 <option value="{{ item[0] }}">{{ item[1] }}</option>
             {% endfor %}
