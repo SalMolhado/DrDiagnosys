@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_bootstrap import Bootstrap
 import mysql.connector
-from mysql.connector.errors import Error
-from json import load
+from mysql.connector.errors import Error, IntegrityError
+from json import load, dumps
 from os import path, listdir, getcwd
 from docker import from_env
 from docker.errors import DockerException, NotFound, APIError
 from time import sleep
 import atexit
+
 
 # Define as informações de conexão do banco de dados como variáveis globais
 DB_HOST = '127.0.0.1'
@@ -113,14 +114,12 @@ def execute_sql(sql: str, params=None, headers=False):
         params = ()
     if connection is not None and cursor is not None:
         try:
-            # Executa a consulta SQL
             print(f"\n----------- ----------- -----------")
             cursor.execute(sql, params)
             if "SELECT" in sql.upper() or "SHOW TABLES" in sql.upper():
                 if headers:
                     headers = [i[0] for i in cursor.description]
                 rows = cursor.fetchall()
-                # Exibe os resultados
                 if rows:
                     print(f"\nRows produced by statement '{cursor.statement}':")
                     print(rows)
@@ -132,7 +131,6 @@ def execute_sql(sql: str, params=None, headers=False):
         except mysql.connector.Error as error:
             print(f"Something went wrong: {error}")
             if connection is not None:
-                # Reverta a transação se algo deu errado
                 connection.rollback()
     else:
         print('Connection or Cursor is None')
@@ -141,37 +139,30 @@ def execute_sql(sql: str, params=None, headers=False):
     return rows
 
 
-def format_sql_from_file(filename, params=None):  # params {'in': [(n), (n), ...], 'equal': [(1,), (2,), ...]}
+def format_sql_from_file(filename, params=None):
     print(f'\nformat_sql_from_file: {params}')
-    # Abre e lê o arquivo
     with open(filename, 'r', encoding='utf-8') as file:
         raw_sql = file.read()
-
-    # Se há parâmetros para inserir na consulta
     final_params = []
-    if params is not None:
-        # Substitui cada %s na consulta SQL por um conjunto de placeholders para cláusulas IN
+    if isinstance(params, tuple):
+        sql = raw_sql
+        final_params = params
+    elif params is not None:
         if 'in' in params:
             for param_set in params['in']:
                 placeholders = ", ".join(["%s"] * len(param_set))
                 raw_sql = raw_sql.replace("IN %s", "IN (" + placeholders + ")", 1)
                 final_params.extend(list(param_set))
-
-        # Substitui cada %s na consulta SQL para cláusulas EQUAL
         if 'equal' in params:
             for param_set in params['equal']:
                 placeholder = "%s"
                 raw_sql = raw_sql.replace("= %s", "= " + placeholder, 1)
                 final_params.append(param_set[0])
-
         sql = raw_sql
-        # Ajusta a lista de parâmetros para passar para o cursor.execute
         final_params = tuple([item for sublist in params.get('in', []) for item in sublist])
-
     else:
         sql = raw_sql
         final_params = ()
-
     print(sql)
     print('%', tuple(final_params))
     return sql, tuple(final_params)
@@ -206,55 +197,138 @@ def consulta(consulta_id):
                                input_type=input_type, nome_consulta=title, placeholder=placeholder)
 
 
+@app.route('/update_record', methods=['GET', 'POST'])
+def update_record():
+    if request.method == 'GET':
+        all_tables_data = get_all_tables_data()
+        return render_template('update_record.html', all_tables_data=all_tables_data)
+
+    elif request.method == 'POST':
+        data = request.get_json()
+        print('!@!')
+        print(dumps(data, indent=4))
+        for table_name, rows in data.items():
+            for row in rows:
+                update_row(table_name, row['original'], row['new'])
+
+        return 'OK', 200
+
+
+@app.route('/delete_record', methods=['GET', 'POST'])
+def delete_record():
+    if request.method == 'GET':
+        all_tables_data = get_all_tables_data()
+        return render_template('delete_record.html', all_tables_data=all_tables_data)
+    elif request.method == 'POST':
+        data = request.get_json()
+        print(dumps(data, indent=4))
+        for table_name, rows in data.items():
+            for row in rows:
+                delete_row(table_name, row)
+        return jsonify({"message": "Data deleted successfully ou não"})
+
+
+def delete_row(table_name, record):
+    id_by_table_ent = {'Doencas': 'id_doenca', 'Sintomas': 'id_sintoma', 'Causas': 'id_causa',
+                       'FatoresDeRisco': 'id_fatorderisco', 'Tratamentos': 'id_tratamento',
+                       'CategoriasDeDoencas': 'id_categoriasdedoencas'}
+    keys_pair_by_table_ass = {'DoencaSintoma': ('id_doenca', 'id_sintoma'),
+                              'DoencaCausa': ('id_doenca', 'id_causa'),
+                              'DoencaFatorDeRisco': ('id_doenca', 'id_fatorderisco'),
+                              'DoencaTratamento': ('id_doenca', 'id_tratamento')}
+    if table_name in id_by_table_ent:
+        where = f'{id_by_table_ent[table_name]} = {int(list(record.values())[0])}'
+    elif table_name in keys_pair_by_table_ass:
+        where = f'{keys_pair_by_table_ass[table_name][0]} = {int(list(record.values())[0])}, ' \
+                f'{keys_pair_by_table_ass[table_name][1]} = {int(list(record.values())[1])}'
+    query = f'DELETE FROM {table_name} WHERE {where};'
+    try:
+        cursor.execute(query)
+    except NotFound:
+        pass
+    except Error:
+        pass
+    except IntegrityError:
+        pass
+
+
+def update_row(table_name, original, new):
+    id_by_table_ent = {'Doencas': 'id_doenca', 'Sintomas': 'id_sintoma', 'Causas': 'id_causa',
+                       'FatoresDeRisco': 'id_fatorderisco', 'Tratamentos': 'id_tratamento',
+                       'CategoriasDeDoencas': 'id_categoriasdedoencas'}
+    keys_pair_by_table_ass = {'DoencaSintoma': ('id_doenca', 'id_sintoma'),
+                              'DoencaCausa': ('id_doenca', 'id_causa'),
+                              'DoencaFatorDeRisco': ('id_doenca', 'id_fatorderisco'),
+                              'DoencaTratamento': ('id_doenca', 'id_tratamento')}
+    new_record = {}
+    for colunm, value in new.items():
+        _, index, colunm_name = colunm.split('-')
+        new_record[index] = (colunm_name, int(value)) if 'id_' in colunm_name else (colunm_name, value)
+    record = {}
+    for colunm, value in original.items():
+        _, index, colunm_name = colunm.split('-')
+        record[index] = (colunm_name, int(value)) if 'id_' in colunm_name else (colunm_name, value)
+    if table_name in id_by_table_ent:
+        where = f" WHERE {record['1'][0]} = %s;"
+        new_params = [value[1] for value in new_record.values()]
+        new_params.append(record['1'][1])
+        params = tuple(new_params)
+        print('params:', params)
+    elif table_name in keys_pair_by_table_ass:
+        where = f" WHERE {record['1'][0]} = %s AND {record['2'][0]} = %s;"
+        new_params = [value[1] for value in new_record.values()]
+        new_params.extend([value[1] for value in record.values()])
+        params = tuple(new_params)
+        print('params:', params)
+    else:
+        raise Error(f'????? o que diabos aconteceu. table_name: {table_name}')
+    query = f'UPDATE {table_name} SET' + ','.join([f' {value[0]} = %s' for value in new_record.values()]) + where
+    try:
+        cursor.execute(query, params)
+    except IntegrityError:
+        pass
+
+
 def load_input_handling_function(consulta_id):
     print('\nload_input_handling_function')
-    # is meant to return another function that knows how to correctly handle the input for a given consultation ID
-    consult_by_id = {5: handle_single_input, 2: handle_no_input, 3: handle_no_input,
-                     1: handle_list_input, 4: handle_single_input}
-    # ...
+    consult_by_id = {-1: handle_single_input, 2: handle_no_input, 3: handle_no_input,
+                     1: handle_list_input, 4: handle_single_input, 5: handle_single_id}
     return consult_by_id[consulta_id]
+
+
+def handle_single_id(form):
+    input_data = int(form.get('items'))
+    params = (input_data,)
+    return params
+
+
+def handle_no_input(form):
+    return None
 
 
 def handle_single_input(form):
     print('\nhandle_single_input')
-    # Here we assume that the form contains a single input with the name "items"
-    # We need to create a tuple for each item because the format_sql_from_file function
-    # expects a list of tuples for the 'in' and 'equal' parameters
     input_data = int(form.get('items'))
-    # Ensure it's a tuple inside a list inside a dictionary
     params = {'in': [(input_data,)]}
     return params
 
 
 def handle_list_input(form):
     print('\nhandle_list_input')
-    # Here we assume that the form contains multiple inputs with the name "items"
-    # We get a list of inputs and need to create a tuple for each input
     input_data = form.getlist('items')
-    # Ensure it's a list of tuples inside a dictionary
     params = {'in': [(int(item),) for item in input_data]}
-    return params
-
-
-def handle_no_input(form):
-    print('\nhandle_no_input')
-    # As there's no input, we can simply return an empty dictionary
-    params = None
     return params
 
 
 def get_results_from_db(selected_items, consulta_id):
     print(f'\nget_results_from_db: {selected_items}')
     pathfile = path.join(getcwd(), 'Data\\Querying')
-    results = []
-    if consulta_id == 5:
-        # Execute the SQL query for consulta 1
-        # First, format the SQL query from the file using the selected_items as parameters
+    pathfile_manipuation = path.join(getcwd(), 'Data\\Manipulation')
+    if consulta_id == -1:
         sql, params = format_sql_from_file(
             path.join(pathfile, 'doenças associadas a fatores de risco por sintomas.sql'),
             selected_items
         )
-        # Then, execute the SQL query and get the results
         headers, results = execute_sql(sql, params, headers=True)
     elif consulta_id == 2:
         sql, params = format_sql_from_file(
@@ -280,17 +354,23 @@ def get_results_from_db(selected_items, consulta_id):
             selected_items
         )
         headers, results = execute_sql(sql, params, headers=True)
+    elif consulta_id == 5:
+        sql, params = format_sql_from_file(
+            path.join(pathfile_manipuation, 'update doença.sql'),
+            selected_items
+        )
+        headers, results = execute_sql(sql, params, headers=True)
     else:
         raise IndexError('Nenhuma consulta com esse id')
-    # Add code here for other consultations
     return results, headers
 
 
 def pre_render_template(consulta_id):
     print('\npre_render_template')
     filepath = path.join(getcwd(), 'Data\\Querying')
+    filepath_manipulation = path.join(getcwd(), 'Data\\Manipulation')
     items, descriptions, input_type, title, placeholder, sql_code = None, None, None, None, None, None
-    if consulta_id == 5:
+    if consulta_id == -1:
         title = 'Assistente de Diagnóstico de Sintomas e Fatores de Riscos'
         sql = 'SELECT * FROM Sintomas;'
         items = execute_sql(sql)
@@ -352,15 +432,82 @@ def pre_render_template(consulta_id):
         with open(path.join(filepath, 'causas por doenças.sql'),
                   'r', encoding='utf-8') as file:
             sql_code = file.read()
-        # Add code here for other consultations
+    elif consulta_id == 5:
+        title = 'Atualize uma Doença'
+        items = execute_sql('SELECT * FROM Doencas')
+        descriptions = 'Disclaimer: Valores memarente representativos'
+        input_type = 'single'
+        placeholder = 'Nome Doenças'
+        with open(path.join(filepath_manipulation, 'update doença.sql'),
+                  'r', encoding='utf-8') as file:
+            sql_code = file.read()
     return items, descriptions, input_type, title, placeholder, sql_code
+
+
+def get_all_tables_data():
+    table_names = [table[0] for table in execute_sql('SHOW TABLES;')]
+    all_tables_data = {table_name: {"primary_keys": [], "column_names": [], "data": [], "foreign_key_maps": {}}
+                       for table_name in table_names}
+    for table_name in table_names:
+        table = all_tables_data[table_name]
+        records = get_table_records(table_name)
+        table["column_names"] = list(records[0].keys())
+        if len(table["column_names"]) > 2:
+            if table_name.lower() == 'fatoresderisco':
+                primary_key = 'id_fatorderisco'
+            elif table_name == 'CategoriasDeDoencas':
+                primary_key = 'id_categoriasdedoencas'
+            else:
+                primary_key = 'id_' + table_name.lower()[:-1]
+            table["primary_keys"].append(primary_key)
+        table["data"] = get_table_records(table_name)
+        table["foreign_key_maps"] = get_foreign_key_maps(table_name)
+    return all_tables_data
+
+
+def get_table_records(table_name):
+    query = f"SELECT * FROM {table_name};"
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    column_names = [i[0] for i in cursor.description]
+    records = [dict(zip(column_names, row)) for row in rows]
+    return records
+
+
+def get_foreign_key_maps(table_name):
+    query = """
+        SELECT 
+            k.COLUMN_NAME, k.REFERENCED_TABLE_NAME
+        FROM
+            INFORMATION_SCHEMA.TABLE_CONSTRAINTS i
+        LEFT JOIN
+            INFORMATION_SCHEMA.KEY_COLUMN_USAGE k ON i.CONSTRAINT_NAME = k.CONSTRAINT_NAME
+        WHERE
+            i.TABLE_SCHEMA = DATABASE()
+            AND i.CONSTRAINT_TYPE = 'FOREIGN KEY' 
+            AND i.TABLE_NAME = %s;
+        """
+    cursor.execute(query, (table_name,))
+    foreign_key_columns = cursor.fetchall()
+    foreign_key_tables_dict = {}
+    for column, ref_table in foreign_key_columns:
+        if ref_table.lower() == 'fatoresderisco':
+            query = f'SELECT id_fatorderisco, nome_fatorderisco FROM FatoresDeRisco;'
+        elif ref_table == 'CategoriasDeDoencas':
+            query = f'SELECT id_categoriasdedoencas, nome_categoriasdedoencas FROM CategoriasDeDoencas;'
+        else:
+            id_column = 'id_' + ref_table.lower()[:-1]
+            name_column = 'nome_' + ref_table.lower()[:-1]
+            query = f"SELECT {id_column}, {name_column} FROM {ref_table};"
+        cursor.execute(query)
+        id_name_pairs = cursor.fetchall()
+        foreign_key_tables_dict[column] = id_name_pairs
+    return foreign_key_tables_dict
 
 
 def populate_tables():
     print('\npopulate_tables')
     populate_tables_nome_e_desc()
-
-    # populate doenças
     with open(path.join(getcwd(), 'Assets\\doenças.json'), encoding='utf-8') as file:
         contents = load(file)
     with open(path.join(getcwd(), 'Data\\Manipulation\\NewDoenca.sql'), encoding='utf-8') as file:
@@ -368,7 +515,6 @@ def populate_tables():
     for content in contents:
         print('&', content)
         print(execute_sql(raw_sql, (content['Nome'], content['Descrição'], content['Categoria'])))
-
     populate_tables_2_ids()
 
 
@@ -377,17 +523,13 @@ def populate_tables_nome_e_desc():
     assets_directory = path.join(getcwd(), "Assets\\nome e desc")
     content_files = [json_filepath for json_filepath in listdir(assets_directory) if json_filepath.endswith('.json')]
     print(content_files)
-
     manipulation_directory = path.join(getcwd(), 'Data\\Manipulation\\nome e desc')
     inserts = [sql_filepath for sql_filepath in listdir(manipulation_directory) if sql_filepath.endswith('.sql')]
     print(inserts)
-
     for insert, content_file in zip(inserts, content_files):
-        # Abre e lê o INSERT INTO
         with open(path.join(manipulation_directory, insert), 'r', encoding='utf-8') as file:
             raw_sql = file.read()
             print(raw_sql)
-        # Abre e lê o JSON
         with open(path.join(assets_directory, content_file), 'r', encoding='utf-8') as file:
             contents = load(file)
         for content in contents:
@@ -400,17 +542,13 @@ def populate_tables_2_ids():
     assets_directory = path.join(getcwd(), "Assets\\dois ids")
     content_files = [json_filepath for json_filepath in listdir(assets_directory) if json_filepath.endswith('.json')]
     print(content_files)
-
     manipulation_directory = path.join(getcwd(), 'Data\\Manipulation\\dois ids')
     inserts = [sql_filepath for sql_filepath in listdir(manipulation_directory) if sql_filepath.endswith('.sql')]
     print(inserts)
-
     for insert, content_file in zip(inserts, content_files):
-        # Abre e lê o INSERT INTO
         with open(path.join(manipulation_directory, insert), 'r', encoding='utf-8') as file:
             raw_sql = file.read()
             print(raw_sql)
-        # Abre e lê o JSON
         with open(path.join(assets_directory, content_file), 'r', encoding='utf-8') as file:
             contents = load(file)
         for content in contents:
@@ -423,11 +561,10 @@ def populate_tables_2_ids():
 def define_db():
     print('\ndefine_db')
     with open('Data/Definition/criação de tabelas.sql', 'r', encoding='utf-8') as file:
-        sql_commands = file.read().split(';')  # Split commands by ';'
-
+        sql_commands = file.read().split(';')
     for sql in sql_commands:
-        sql = sql.strip()  # Remove leading/trailing whitespace
-        if sql:  # Ensure it's not an empty string
+        sql = sql.strip()
+        if sql:
             execute_sql(sql)
 
 

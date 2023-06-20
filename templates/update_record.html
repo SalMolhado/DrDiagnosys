@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container">
+    <form id="update-form" method="POST">
+        {% for table_name, table_data in all_tables_data.items() %}
+            <h3>{{ table_name }}</h3>
+            <div class="table-data" data-table-name="{{ table_name }}">
+                {% for row in table_data.data %}
+                    <div class="row-data" data-row-id="{{ row[table_data.column_names[0]] }}">
+                        {% for column_name in table_data.column_names %}
+                            {% if column_name in table_data.primary_keys %}
+                                <input type="hidden" name="{{ table_name }}-{{ loop.index }}-{{ column_name }}" value="{{ row[column_name] }}" data-original-value="{{ row[column_name] }}">
+                            {% elif column_name in table_data.foreign_key_maps %}
+                                <select name="{{ table_name }}-{{ loop.index }}-{{ column_name }}" data-original-value="{{ row[column_name] }}">
+                                    {% for option_value, option_name in table_data.foreign_key_maps[column_name] %}
+                                        <option value="{{ option_value }}" {% if option_value == row[column_name] %}selected{% endif %}>{{ option_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <input type="text" name="{{ table_name }}-{{ loop.index }}-{{ column_name }}" value="{{ row[column_name] }}" data-original-value="{{ row[column_name] }}">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+$(document).ready(function() {
+    $("#update-form").submit(function(e) {
+        e.preventDefault();
+
+        var updatedData = {};
+
+        $(".table-data").each(function() {
+            var tableName = $(this).data('table-name');
+            var tableUpdates = [];
+
+            $(this).find(".row-data").each(function() {
+                var rowId = $(this).data('row-id');
+
+                var rowData = {
+                    "index": rowId,
+                    "original": {},
+                    "new": {}
+                };
+
+                var isUpdated = false;
+
+                $(this).find("input, select").each(function() {
+                    var fieldName = $(this).attr('name');
+                    var originalValue = $(this).data('original-value').toString();
+                    var newValue = $(this).val();
+
+                    rowData["original"][fieldName] = originalValue;
+
+                    if (originalValue !== newValue) {
+                        rowData["new"][fieldName] = newValue;
+                        isUpdated = true;
+                    }
+                });
+
+                if (isUpdated) {
+                    tableUpdates.push(rowData);
+                }
+            });
+
+            if (tableUpdates.length > 0) {
+                updatedData[tableName] = tableUpdates;
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/update_record",
+            data: JSON.stringify(updatedData),
+            contentType: "application/json",
+            success: function(data){
+                alert("Data updated successfully");
+            },
+            error: function(){
+                alert("An error occurred");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

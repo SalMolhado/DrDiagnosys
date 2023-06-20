@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container">
+    <form id="delete-form" method="POST">
+        {% for table_name, table_data in all_tables_data.items() %}
+            <h3>{{ table_name }}</h3>
+            <table class="table-data" data-table-name="{{ table_name }}">
+                <thead>
+                    <tr>
+                        <th></th>
+                        {% for column_name in table_data.column_names %}
+                            <th>{{ column_name }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in table_data.data %}
+                        <tr class="row-data" data-row-id="{{ row[table_data.column_names[0]] }}">
+                            <td><input type="checkbox" class="delete-checkbox" name="delete-{{ table_name }}-{{ loop.index }}"></td>
+                            {% for column_name in table_data.column_names %}
+                                <td>{{ row[column_name] }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+$(document).ready(function() {
+    $("#delete-form").submit(function(e) {
+        e.preventDefault();
+
+        var deleteData = {};
+
+        $(".table-data").each(function() {
+            var tableName = $(this).data('table-name');
+            var tableDeletes = [];
+
+            $(this).find(".row-data").each(function() {
+                var checkbox = $(this).find('.delete-checkbox');
+                if(checkbox.is(":checked")) {
+                    var rowId = $(this).data('row-id');
+                    var rowData = {};
+
+                    $(this).find("td").not(':first').each(function(index) {
+                        var fieldName = tableName + '-' + (index + 1);
+                        var columnValue = $(this).text();
+
+                        rowData[fieldName] = columnValue;
+                    });
+
+                    tableDeletes.push(rowData);
+                }
+            });
+
+            if (tableDeletes.length > 0) {
+                deleteData[tableName] = tableDeletes;
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/delete_record",
+            data: JSON.stringify(deleteData),
+            contentType: "application/json",
+            success: function(data){
+                alert("Data deleted successfully");
+            },
+            error: function(){
+                alert("An error occurred");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

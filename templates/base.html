@@ -4,18 +4,14 @@
 
 {% block styles %}
     {{ super() }}
-    <!-- Include Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
-    <!-- Include JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Include Select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <!-- Include Highlight.js -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 {% endblock %}
@@ -32,6 +28,8 @@
                     <li><a href="{{ url_for('consulta', consulta_id=3) }}">Consulta 3</a></li>
                     <li><a href="{{ url_for('consulta', consulta_id=4) }}">Consulta 4</a></li>
                     <li><a href="/show_tables">Tabelas</a></li>
+                    <li><a href="/update_record">Alterar</a></li>
+                    <li><a href="/delete_record">Excluir</a></li>
                 </ul>
             </div>
         </nav>
