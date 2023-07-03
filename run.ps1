@@ -1,4 +1,4 @@
-$venvName = "venv"
+$venvName = "myenv"
 
 if (Test-Path $venvName) {
     . $venvName/Scripts/Activate.ps1
