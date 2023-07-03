@@ -1,6 +1,6 @@
 #!/bin/bash
 
-venvName="venv"
+venvName="myenv"
 
 if [ -d "$venvName" ]
 then
